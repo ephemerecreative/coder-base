@@ -13,6 +13,7 @@ RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y \
     sudo \
     python3 \
     python3-pip \
+    php \
     ca-certificates \
     locales \
     postgresql-client \
@@ -31,4 +32,4 @@ RUN adduser --gecos '' --disabled-password coder && \
 USER coder
 WORKDIR /home/coder
 
-COPY scripts/zpreztorc scripts/configure scripts/prezto.zsh /coder/
+COPY scripts/zpreztorc scripts/configure scripts/prezto.zsh scripts/.zshrc /coder/

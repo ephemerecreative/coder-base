@@ -6,3 +6,4 @@ for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
 done
 
 cp /coder/zpreztorc /home/coder/.zprezto/runcoms/zpreztorc
+cp /coder/.zshrc /home/coder/.zshrc
