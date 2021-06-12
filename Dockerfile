@@ -15,7 +15,12 @@ RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y \
     python3-pip \
     ca-certificates \
     locales \
+    postgresql-client \
+    mysql-client \
     zsh
+
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - && \
+    sudo apt-get install -y nodejs
 
 # Set default shell to zsh
 RUN chsh -s /usr/bin/zsh
@@ -26,9 +31,4 @@ RUN adduser --gecos '' --disabled-password coder && \
 USER coder
 WORKDIR /home/coder
 
-COPY scripts/configure-prezto.sh /tmp/configure-prezto.sh
-RUN zsh /tmp/configure-prezto.sh
-COPY assets/.zpreztorc /home/coder/.zprezto/runcoms/zpreztorc
-
-COPY scripts/config.sh /tmp/config.sh
-RUN zsh /tmp/config.sh
+COPY scripts/zpreztorc scripts/configure scripts/prezto.zsh /coder/
