@@ -18,13 +18,11 @@ RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y \
     locales \
     postgresql-client \
     mysql-client \
-    zsh
+    zsh \
+    fish
 
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - && \
     sudo apt-get install -y nodejs
-
-# Set default shell to zsh
-RUN chsh -s /usr/bin/zsh
 
 # Add a user `coder` so that you're not developing as the `root` user
 RUN adduser --gecos '' --disabled-password coder && \
