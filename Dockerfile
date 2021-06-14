@@ -30,4 +30,4 @@ RUN adduser --gecos '' --disabled-password coder && \
 USER coder
 WORKDIR /home/coder
 
-COPY scripts/zpreztorc scripts/configure scripts/prezto.zsh scripts/.zshrc /coder/
+COPY scripts/configure /coder/configure
