@@ -30,4 +30,4 @@ RUN adduser --gecos '' --disabled-password coder && \
 USER coder
 WORKDIR /home/coder
 
-COPY scripts/configure /coder/configure
+COPY scripts/configure scripts/.profile /coder/
