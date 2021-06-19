@@ -1,9 +1,21 @@
 git config --global init.defaultBranch main
 
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 
-touch /home/coder/.bashrc
-cp /coder/.profile /home/coder/.profile
+
+##################
+## Oh My Zsh #####
+##################
+
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+cp /coder/home/.profile /home/coder/.profile
+cp /coder/home/.zshrc /home/coder/.zshrc
+
+
+##################
+## NVM ###########
+##################
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
