@@ -31,6 +31,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - && \
 
 RUN chsh -s $(which zsh) $(whoami)
 
+RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 
 ## USER: CODER
@@ -41,6 +42,8 @@ RUN adduser --gecos '' --disabled-password coder && \
 RUN chsh -s $(which zsh) coder
 
 USER coder
+
+RUN sudo chown -R coder /home/linuxbrew/.linuxbrew/Cellar
 
 WORKDIR /home/coder
 

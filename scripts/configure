@@ -25,3 +25,14 @@ nvm install node
 nvm alias default node
 nvm use default
 npm install -g yarn
+
+
+
+##################
+## HOMEBREW ######
+##################
+
+echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/coder/.profile
+echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/coder/.zshrc
+echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/coder/.bashrc
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
