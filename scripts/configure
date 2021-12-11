@@ -1,38 +1,100 @@
+#!/usr/bin/zsh
+
 git config --global init.defaultBranch main
-
-
 
 ##################
 ## Oh My Zsh #####
 ##################
 
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-cp /coder/home/.profile /home/coder/.profile
-cp /coder/home/.zshrc /home/coder/.zshrc
+if [ ! -f ~/.coder-base-image ]; then
+    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    echo "Setting up initial zshrc and local bin"
+    mkdir -p ~/.local/bin
+    cp /coder/home/.profile /home/coder/.profile
+    cp /coder/home/.zshrc /home/coder/.zshrc
+fi
 
 
 ##################
 ## NVM ###########
 ##################
 
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+if [ ! -f ~/.coder-base-image ]; then
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-nvm install node
-nvm alias default node
-nvm use default
-npm install -g yarn
+    nvm install 16
+    nvm alias default 16
+    nvm use default
+    npm install -g yarn
+fi
+
+##################
+## PULUMI ########
+##################
+
+if [ ! -f ~/.coder-base-image ]; then
+    curl -fsSL https://get.pulumi.com | sh
+fi
 
 
+##################
+## DOCTL #########
+##################
+
+if [ ! -f ~/.coder-base-image ]; then
+    wget https://github.com/digitalocean/doctl/releases/download/v1.66.0/doctl-1.66.0-linux-amd64.tar.gz
+    tar xf $HOME/doctl-1.66.0-linux-amd64.tar.gz
+    mv $HOME/doctl $HOME/.local/bin/doctl
+fi
+
+
+##################
+## HASURA CLI ####
+##################
+
+if [ ! -f ~/.coder-base-image ]; then
+    export PATH=$PATH:$HOME/.local/bin
+    curl -L https://github.com/hasura/graphql-engine/raw/stable/cli/get.sh | INSTALL_PATH=$HOME/.local/bin bash
+fi
+
+
+##################
+## NESTJS CLI ####
+##################
+
+if [ ! -f ~/.coder-base-image ]; then
+    npm install -g @nestjs/cli
+fi
+
+
+##################
+## GCLOUD CLI ####
+##################
+
+
+if [ ! -f ~/.coder-base-image ]; then
+    curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-366.0.0-linux-x86_64.tar.gz
+    tar xf google-cloud-sdk-366.0.0-linux-x86_64.tar.gz
+    $HOME/google-cloud-sdk/install.sh --path-update=true --rc-path=$HOME/.zshrc --command-completion=true --quiet
+fi
 
 ##################
 ## HOMEBREW ######
 ##################
 
-echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/coder/.profile
-echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/coder/.zshrc
-echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/coder/.bashrc
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+if [ ! -f ~/.coder-base-image ]; then
+    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/coder/.profile
+    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/coder/.zshrc
+    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/coder/.bashrc
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+##################
+## END CONFIG ####
+##################
+
+touch ~/.coder-base-image
